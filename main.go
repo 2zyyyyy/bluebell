@@ -47,8 +47,9 @@ func main() {
 		fmt.Println("init redis failed, err:", err)
 	}
 	defer redis.Close()
+
 	// 5.注册路由
-	r := routers.SetUp()
+	r := routers.SetUpRouter()
 	// 6.启动服务（优雅关机）
 	server := &http.Server{
 		Addr:    fmt.Sprintf(":%d", settings.Config.Port),
