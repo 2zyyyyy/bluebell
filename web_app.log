@@ -112,3 +112,5 @@
 {"level":"INFO","time":"2022-05-16T23:10:39.622+0800","caller":"logger/logger.go:71","msg":"/signup","status":200,"method":"POST","path":"/signup","query":"","ip":"127.0.0.1","user-agent":"PostmanRuntime/7.29.0","error":"","cost":0.0004982}
 {"level":"DEBUG","time":"2022-05-16T23:11:54.683+0800","caller":"bluebell/main.go:34","msg":"logger init success!!!"}
 {"level":"INFO","time":"2022-05-16T23:11:54.687+0800","caller":"bluebell/main.go:58","msg":":8080"}
+{"level":"DEBUG","time":"2022-05-16T23:13:19.393+0800","caller":"bluebell/main.go:34","msg":"logger init success!!!"}
+{"level":"INFO","time":"2022-05-16T23:13:19.397+0800","caller":"bluebell/main.go:58","msg":":8080"}
