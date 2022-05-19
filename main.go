@@ -24,7 +24,7 @@ func main() {
 		fmt.Println("init setting failed, err:", err)
 	}
 	// 2.初始化日志
-	if err := logger.Init(settings.Config.LogConfig); err != nil {
+	if err := logger.Init(settings.Config.LogConfig, settings.Config.Mode); err != nil {
 		fmt.Println("init logger failed, err:", err)
 	}
 	// 延迟注册zap

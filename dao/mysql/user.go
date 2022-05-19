@@ -2,6 +2,7 @@ package mysql
 
 import (
 	"crypto/md5"
+	"database/sql"
 	"encoding/hex"
 	"errors"
 	"webapp-scaffold/models"
@@ -27,13 +28,35 @@ func InsertUser(u *models.User) (err error) {
 	// 密码加密
 	u.Password = encryptPassword(u.Password)
 	//执行sql语句写入数据
-	sql := "insert into user(user_id, username, password, email, gender) value(?,?,?,?,?)"
-	_, err = db.Exec(sql, u.UserID, u.UserName, u.Password, u.Email, u.Gender)
+	sqlStr := "insert into user(user_id, username, password, email, gender) value(?,?,?,?,?)"
+	_, err = db.Exec(sqlStr, u.UserID, u.UserName, u.Password, u.Email, u.Gender)
 	return
 }
 
+// encryptPassword 密码加密
 func encryptPassword(password string) string {
 	h := md5.New()
 	h.Write([]byte(secret))
 	return hex.EncodeToString(h.Sum([]byte(password)))
+}
+
+// Login 用户登录
+func Login(u *models.User) (err error) {
+	oPassword := u.Password // 用户登录的密码
+	sqlStr := "select user_id, username, password from user where username = ?"
+	err = db.Get(u, sqlStr, u.UserName)
+	if err == sql.ErrNoRows {
+		// 如果没有查询到该用户
+		return errors.New(u.UserName + "该用户不存在")
+	}
+	if err != nil {
+		// 数据库查询失败
+		return err
+	}
+	// 判断密码是否正确
+	password := encryptPassword(oPassword)
+	if password != u.Password {
+		return errors.New("密码错误")
+	}
+	return
 }

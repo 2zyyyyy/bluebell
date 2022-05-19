@@ -1,7 +1,6 @@
 package routers
 
 import (
-	"net/http"
 	"webapp-scaffold/controllers"
 	"webapp-scaffold/logger"
 
@@ -22,12 +21,10 @@ func SetUpRouter() *gin.Engine {
 	}
 
 	// 用户注册
-	r.POST("/signup", controllers.SignUpHandle)
+	r.POST("/signup", controllers.SignUpHandler)
 
-	r.GET("/index", func(c *gin.Context) {
-		c.JSON(http.StatusOK, gin.H{
-			"message": "success",
-		})
-	})
+	// 用户登录
+	r.POST("/login", controllers.LoginHandler)
+
 	return r
 }
