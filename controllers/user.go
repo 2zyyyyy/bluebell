@@ -1,8 +1,9 @@
 package controllers
 
 import (
+	"errors"
 	"fmt"
-	"net/http"
+	"webapp-scaffold/dao/mysql"
 	"webapp-scaffold/models"
 	"webapp-scaffold/service"
 
@@ -23,27 +24,26 @@ func SignUpHandler(c *gin.Context) {
 		// 判断err是不是validator.ValidationErrors类型
 		errs, ok := err.(validator.ValidationErrors)
 		if !ok {
-			c.JSON(http.StatusOK, gin.H{
-				"msg": err.Error(),
-			})
+			ResponseError(c, CodeInvalidParam)
+			return
 		}
-		c.JSON(http.StatusOK, gin.H{
-			"msg": removeTopStruct(errs.Translate(trans)), // 翻译错误信息
-		})
+		ResponseErrorWithMsg(c, CodeInvalidParam, removeTopStruct(errs.Translate(trans)))
 		return
 	}
 	fmt.Println(*p)
 	// 2.业务处理
 	if err := service.SignUp(p); err != nil {
-		c.JSON(http.StatusOK, gin.H{
-			"msg": "注册失败",
-		})
+		zap.L().Error("service.SignUp failed", zap.Error(err))
+		if errors.Is(err, mysql.ErrorUserExist) {
+			// 如果用户已存在
+			ResponseError(c, CodeUserExist)
+			return
+		}
+		ResponseError(c, CodeServerBusy)
 		return
 	}
 	// 3.返回响应
-	c.JSON(http.StatusOK, gin.H{
-		"msg": "注册成功",
-	})
+	ResponseSuccess(c, nil)
 }
 
 // LoginHandler 处理登录请求的函数
@@ -56,26 +56,26 @@ func LoginHandler(c *gin.Context) {
 		// 判断err是不是validator.ValidationErrors类型
 		errs, ok := err.(validator.ValidationErrors)
 		if !ok {
-			c.JSON(http.StatusOK, gin.H{
-				"msg": err.Error(),
-			})
+			ResponseError(c, CodeInvalidParam)
+			return
 		}
-		c.JSON(http.StatusOK, gin.H{
-			"msg": removeTopStruct(errs.Translate(trans)), // 翻译错误信息
-		})
+		// 具体参数错误
+		ResponseErrorWithMsg(c, CodeInvalidParam, removeTopStruct(errs.Translate(trans)))
 		return
 	}
 	fmt.Println(*p)
 	// 2.业务逻辑处理
 	if err := service.Login(p); err != nil {
 		zap.L().Error("service.Login failed.", zap.String("用户:", p.Username), zap.Error(err))
-		c.JSON(http.StatusOK, gin.H{
-			"msg": "登录失败，用户名或密码错误",
-		})
+		// 判断用户是否不存在
+		if errors.Is(err, mysql.ErrorUserNotExists) {
+			ResponseError(c, CodeUserNoExist)
+			return
+		}
+		// 处理其他错误
+		ResponseError(c, CodeInvalidPassword)
 		return
 	}
 	// 返回响应
-	c.JSON(http.StatusOK, gin.H{
-		"msg": "登录成功",
-	})
+	ResponseSuccess(c, nil)
 }

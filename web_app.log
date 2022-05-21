@@ -160,3 +160,29 @@
 {"level":"INFO","time":"2022-05-19T23:54:30.981+0800","caller":"logger/logger.go:83","msg":"/login","status":200,"method":"POST","path":"/login","query":"","ip":"127.0.0.1","user-agent":"PostmanRuntime/7.29.0","error":"","cost":0.0007061}
 {"level":"INFO","time":"2022-05-19T23:54:36.918+0800","caller":"bluebell/main.go:76","msg":"shutdown server..."}
 {"level":"INFO","time":"2022-05-19T23:54:36.920+0800","caller":"bluebell/main.go:84","msg":"server exiting"}
+{"level":"DEBUG","time":"2022-05-21T17:08:34.564+0800","caller":"bluebell/main.go:34","msg":"logger init success!!!"}
+{"level":"INFO","time":"2022-05-21T17:08:34.573+0800","caller":"bluebell/main.go:58","msg":":8080"}
+{"level":"INFO","time":"2022-05-21T17:09:04.178+0800","caller":"logger/logger.go:83","msg":"/login","status":200,"method":"POST","path":"/login","query":"","ip":"127.0.0.1","user-agent":"PostmanRuntime/7.29.0","error":"","cost":0.0026141}
+{"level":"ERROR","time":"2022-05-21T17:09:20.935+0800","caller":"controllers/user.go:69","msg":"service.Login failed.","用户:":"wanli","error":"密码错误"}
+{"level":"INFO","time":"2022-05-21T17:09:20.935+0800","caller":"logger/logger.go:83","msg":"/login","status":200,"method":"POST","path":"/login","query":"","ip":"127.0.0.1","user-agent":"PostmanRuntime/7.29.0","error":"","cost":0.0018806}
+{"level":"ERROR","time":"2022-05-21T17:09:48.831+0800","caller":"controllers/user.go:55","msg":"Login with invalid param","error":"Key: 'ParamLogin.username' Error:Field validation for 'username' failed on the 'required' tag"}
+{"level":"INFO","time":"2022-05-21T17:09:48.832+0800","caller":"logger/logger.go:83","msg":"/login","status":200,"method":"POST","path":"/login","query":"","ip":"127.0.0.1","user-agent":"PostmanRuntime/7.29.0","error":"","cost":0.0001682}
+{"level":"ERROR","time":"2022-05-21T17:10:12.811+0800","caller":"controllers/user.go:55","msg":"Login with invalid param","error":"Key: 'ParamLogin.username' Error:Field validation for 'username' failed on the 'required' tag\nKey: 'ParamLogin.password' Error:Field validation for 'password' failed on the 'required' tag"}
+{"level":"INFO","time":"2022-05-21T17:10:12.812+0800","caller":"logger/logger.go:83","msg":"/login","status":200,"method":"POST","path":"/login","query":"","ip":"127.0.0.1","user-agent":"PostmanRuntime/7.29.0","error":"","cost":0.0008231}
+{"level":"ERROR","time":"2022-05-21T17:10:28.292+0800","caller":"controllers/user.go:69","msg":"service.Login failed.","用户:":"wanli","error":"密码错误"}
+{"level":"INFO","time":"2022-05-21T17:10:28.293+0800","caller":"logger/logger.go:83","msg":"/login","status":200,"method":"POST","path":"/login","query":"","ip":"127.0.0.1","user-agent":"PostmanRuntime/7.29.0","error":"","cost":0.002033}
+{"level":"ERROR","time":"2022-05-21T17:10:45.674+0800","caller":"controllers/user.go:69","msg":"service.Login failed.","用户:":"wanl1i","error":"该用户不存在"}
+{"level":"INFO","time":"2022-05-21T17:10:45.674+0800","caller":"logger/logger.go:83","msg":"/login","status":200,"method":"POST","path":"/login","query":"","ip":"127.0.0.1","user-agent":"PostmanRuntime/7.29.0","error":"","cost":0.0012797}
+{"level":"ERROR","time":"2022-05-21T17:10:53.627+0800","caller":"controllers/user.go:69","msg":"service.Login failed.","用户:":"wanli","error":"密码错误"}
+{"level":"INFO","time":"2022-05-21T17:10:53.629+0800","caller":"logger/logger.go:83","msg":"/login","status":200,"method":"POST","path":"/login","query":"","ip":"127.0.0.1","user-agent":"PostmanRuntime/7.29.0","error":"","cost":0.0038147}
+{"level":"ERROR","time":"2022-05-21T17:12:00.904+0800","caller":"controllers/user.go:69","msg":"service.Login failed.","用户:":"wanli","error":"密码错误"}
+{"level":"INFO","time":"2022-05-21T17:12:00.904+0800","caller":"logger/logger.go:83","msg":"/login","status":200,"method":"POST","path":"/login","query":"","ip":"127.0.0.1","user-agent":"PostmanRuntime/7.29.0","error":"","cost":0.0009523}
+{"level":"INFO","time":"2022-05-21T17:13:12.971+0800","caller":"logger/logger.go:83","msg":"/login","status":200,"method":"POST","path":"/login","query":"","ip":"127.0.0.1","user-agent":"PostmanRuntime/7.29.0","error":"","cost":0.0009432}
+{"level":"ERROR","time":"2022-05-21T17:13:21.987+0800","caller":"controllers/user.go:69","msg":"service.Login failed.","用户:":"wanl1i","error":"该用户不存在"}
+{"level":"INFO","time":"2022-05-21T17:13:21.987+0800","caller":"logger/logger.go:83","msg":"/login","status":200,"method":"POST","path":"/login","query":"","ip":"127.0.0.1","user-agent":"PostmanRuntime/7.29.0","error":"","cost":0.0010765}
+{"level":"ERROR","time":"2022-05-21T17:13:42.670+0800","caller":"controllers/user.go:69","msg":"service.Login failed.","用户:":"wanli","error":"密码错误"}
+{"level":"INFO","time":"2022-05-21T17:13:42.670+0800","caller":"logger/logger.go:83","msg":"/login","status":200,"method":"POST","path":"/login","query":"","ip":"127.0.0.1","user-agent":"PostmanRuntime/7.29.0","error":"","cost":0.0015792}
+{"level":"ERROR","time":"2022-05-21T17:13:52.746+0800","caller":"controllers/user.go:55","msg":"Login with invalid param","error":"invalid character '1' looking for beginning of object key string"}
+{"level":"INFO","time":"2022-05-21T17:13:52.746+0800","caller":"logger/logger.go:83","msg":"/login","status":200,"method":"POST","path":"/login","query":"","ip":"127.0.0.1","user-agent":"PostmanRuntime/7.29.0","error":"","cost":0.000197}
+{"level":"INFO","time":"2022-05-21T17:30:41.147+0800","caller":"bluebell/main.go:76","msg":"shutdown server..."}
+{"level":"INFO","time":"2022-05-21T17:30:41.150+0800","caller":"bluebell/main.go:84","msg":"server exiting"}
