@@ -3,6 +3,7 @@ package routers
 import (
 	"webapp-scaffold/controllers"
 	"webapp-scaffold/logger"
+	"webapp-scaffold/middlewares"
 
 	"go.uber.org/zap"
 
@@ -25,6 +26,11 @@ func SetUpRouter() *gin.Engine {
 
 	// 用户登录
 	r.POST("/login", controllers.LoginHandler)
+
+	// JWT 认证测试路由
+	r.GET("/auth", middlewares.JWTAuthMiddleware(), func(c *gin.Context) {
+		controllers.ResponseSuccess(c, nil)
+	})
 
 	return r
 }

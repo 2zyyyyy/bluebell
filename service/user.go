@@ -3,6 +3,7 @@ package service
 import (
 	"webapp-scaffold/dao/mysql"
 	"webapp-scaffold/models"
+	"webapp-scaffold/pkg/jwt"
 	"webapp-scaffold/pkg/snowflake"
 )
 
@@ -27,10 +28,14 @@ func SignUp(p *models.ParamSignUp) (err error) {
 }
 
 // Login 处理用户登录逻辑
-func Login(p *models.ParamLogin) (err error) {
+func Login(p *models.ParamLogin) (token string, err error) {
 	u := &models.User{
 		UserName: p.Username,
 		Password: p.Password,
 	}
-	return mysql.Login(u)
+	if err := mysql.Login(u); err != nil {
+		return "", err
+	}
+	// 生成JWT
+	return jwt.GenToken(u.UserID, u.UserName)
 }
