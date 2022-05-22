@@ -37,3 +37,12 @@ func GetCommunityByID(id int64) (communityDetail *models.CommunityDetail, err er
 	}
 	return
 }
+
+// CreateCommunityPost 创建社区的帖子
+func CreateCommunityPost() (post *models.CommunityPost, err error) {
+	// 申请内存
+	post = new(models.CommunityPost)
+	sqlStr := ""
+
+	return
+}

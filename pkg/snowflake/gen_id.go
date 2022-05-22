@@ -29,8 +29,8 @@ func Init(startTime string, machineId uint16) (err error) {
 	return
 }
 
-// GetID 返回生成的id
-func GetID() (id uint64, err error) {
+// GenID 返回生成的id
+func GenID() (id uint64, err error) {
 	if sonyFlake == nil {
 		zap.L().Error("sony flake not init")
 		return

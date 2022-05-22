@@ -5,6 +5,8 @@ import (
 	"webapp-scaffold/models"
 	"webapp-scaffold/pkg/jwt"
 	"webapp-scaffold/pkg/snowflake"
+
+	"go.uber.org/zap"
 )
 
 // 用户相关
@@ -17,7 +19,11 @@ func SignUp(p *models.ParamSignUp) (err error) {
 		return err
 	}
 	// 2.生成UID
-	userID, err := snowflake.GetID()
+	userID, err := snowflake.GenID()
+	if err != nil {
+		zap.L().Error("user snowflake.GenID failed.", zap.Error(err))
+		return
+	}
 	u := &models.User{
 		UserID:   userID,
 		UserName: p.Username,

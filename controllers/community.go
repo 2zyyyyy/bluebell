@@ -2,6 +2,7 @@ package controllers
 
 import (
 	"strconv"
+	"webapp-scaffold/models"
 	"webapp-scaffold/service"
 
 	"go.uber.org/zap"
@@ -41,4 +42,25 @@ func CommunityDetailHandler(c *gin.Context) {
 		return
 	}
 	ResponseSuccess(c, detail)
+}
+
+// CreatePostHandler 创建帖子函数
+func CreatePostHandler(c *gin.Context) {
+	// 1.获取参数
+	post := new(models.CommunityPost)
+	if err := c.ShouldBindJSON(post); err != nil {
+		// 如果参数异常就返回错误
+		ResponseError(c, CodeInvalidParam)
+		return
+	}
+	// 2.参数校验
+
+	// 3.存储数据
+	if err := service.CreateCommunityPost(); err != nil {
+		// 创建失败 返回错误信息
+		zap.L().Error("service.CreateCommunityPost failed.", zap.Error(err))
+		ResponseError(c, CodeServerBusy)
+		return
+	}
+	// 4.返回响应
 }
