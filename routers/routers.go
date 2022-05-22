@@ -21,16 +21,19 @@ func SetUpRouter() *gin.Engine {
 		return nil
 	}
 
+	v1 := r.Group("/api/v1")
+
 	// 用户注册
-	r.POST("/signup", controllers.SignUpHandler)
-
+	v1.POST("/signup", controllers.SignUpHandler)
 	// 用户登录
-	r.POST("/login", controllers.LoginHandler)
+	v1.POST("/login", controllers.LoginHandler)
 
-	// JWT 认证测试路由
-	r.GET("/auth", middlewares.JWTAuthMiddleware(), func(c *gin.Context) {
-		controllers.ResponseSuccess(c, nil)
-	})
+	// JWT认证
+	v1.Use(middlewares.JWTAuthMiddleware())
+	{
+		v1.GET("/community", controllers.CommunityHandler)
+		v1.GET("/community/:id", controllers.CommunityDetailHandler)
+	}
 
 	return r
 }

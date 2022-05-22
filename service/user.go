@@ -7,6 +7,8 @@ import (
 	"webapp-scaffold/pkg/snowflake"
 )
 
+// 用户相关
+
 // SignUp 处理用户注册逻辑
 func SignUp(p *models.ParamSignUp) (err error) {
 	// 1.判断用户是否存在

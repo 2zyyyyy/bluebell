@@ -14,6 +14,8 @@ import (
 	"github.com/gin-gonic/gin"
 )
 
+// 用户相关
+
 // SignUpHandler 处理注册请求的函数
 func SignUpHandler(c *gin.Context) {
 	// 1.获取参数和参数校验
