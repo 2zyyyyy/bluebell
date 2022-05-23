@@ -22,13 +22,13 @@ func GetCommunityDetail(id int64) (detail *models.CommunityDetail, err error) {
 
 func CreateCommunityPost(p *models.CommunityPost) (err error) {
 	// 1.生成id
-	id, err := snowflake.GenID()
+	var id uint64
+	id, err = snowflake.GenID()
 	if err != nil {
 		zap.L().Error("post snowflake.GenID failed.", zap.Error(err))
 		return
 	}
-	// 2.保存到数据库
-
-	// 3.返回响应
-	return
+	p.ID = int64(id)
+	// 2.保存到数据库 并返回
+	return mysql.CreateCommunityPost(p)
 }

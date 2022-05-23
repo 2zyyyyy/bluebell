@@ -39,10 +39,11 @@ func GetCommunityByID(id int64) (communityDetail *models.CommunityDetail, err er
 }
 
 // CreateCommunityPost 创建社区的帖子
-func CreateCommunityPost() (post *models.CommunityPost, err error) {
-	// 申请内存
-	post = new(models.CommunityPost)
-	sqlStr := ""
-
+func CreateCommunityPost(post *models.CommunityPost) (err error) {
+	sqlStr := "insert into post(post_id, title, author_id, community_id, content) value(?,?,?,?,?)"
+	_, err = db.Exec(sqlStr, post.ID, post.Title, post.AuthorID, post.CommunityID, post.Content)
+	if err != nil {
+		return err
+	}
 	return
 }

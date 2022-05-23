@@ -49,18 +49,28 @@ func CreatePostHandler(c *gin.Context) {
 	// 1.获取参数
 	post := new(models.CommunityPost)
 	if err := c.ShouldBindJSON(post); err != nil {
-		// 如果参数异常就返回错误
+		// 如果参数异常就记录日志并返回错误
+		zap.L().Debug("c.ShouldBindJSON(post) failed.", zap.Any("err", err))
+		zap.L().Error("create community failed.", zap.Error(err))
 		ResponseError(c, CodeInvalidParam)
 		return
 	}
-	// 2.参数校验
+	// 2.获取用户id
+	userId, err := getCurrentUserID(c)
+	if err != nil {
+		ResponseError(c, CodeNeedLogin)
+		return
+	}
+	post.AuthorID = int64(userId)
+	// 3.参数校验
 
-	// 3.存储数据
-	if err := service.CreateCommunityPost(); err != nil {
+	// 4.存储数据
+	if err := service.CreateCommunityPost(post); err != nil {
 		// 创建失败 返回错误信息
 		zap.L().Error("service.CreateCommunityPost failed.", zap.Error(err))
 		ResponseError(c, CodeServerBusy)
 		return
 	}
 	// 4.返回响应
+	ResponseSuccess(c, post)
 }
