@@ -31,10 +31,11 @@ func SetUpRouter() *gin.Engine {
 	// JWT认证
 	v1.Use(middlewares.JWTAuthMiddleware())
 	{
-		v1.GET("/community", controllers.CommunityHandler)
-		v1.GET("/community/:id", controllers.CommunityDetailHandler)
+		v1.GET("/community", controllers.CommunityHandler)           // 社区列表
+		v1.GET("/community/:id", controllers.CommunityDetailHandler) // 社区详情
 
-		v1.POST("/community/post", controllers.CreatePostHandler)
+		v1.POST("/community/post", controllers.CreatePostHandler)    // 创建帖子
+		v1.GET("/community/post/:id", controllers.PostDetailHandler) // 帖子详情
 	}
 
 	return r

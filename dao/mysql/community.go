@@ -47,3 +47,33 @@ func CreateCommunityPost(post *models.CommunityPost) (err error) {
 	}
 	return
 }
+
+// GetAuthorNameById 根据用户id查询用户名称
+func GetAuthorNameById(userId uint64) (user *models.User, err error) {
+	user = new(models.User)
+	sqlStr := "select user_id, username from user where user_id = ?"
+	if err := db.Get(user, sqlStr, userId); err != nil {
+		// 判断id是否有效
+		if err == sql.ErrNoRows {
+			err = ErrorInvalidID
+			return nil, err
+		}
+	}
+	return
+}
+
+// GetPostDetailByID 根据帖子ID查询帖子详情
+func GetPostDetailByID(postId uint64) (postDetail *models.CommunityPost, err error) {
+	// 申请内存
+	postDetail = new(models.CommunityPost)
+	sqlStr := "select post_id, title, content, author_id, community_id, status, create_time from post where post_id = ?"
+	if err := db.Get(postDetail, sqlStr, postId); err != nil {
+		// 判断id是否有效
+		if err == sql.ErrNoRows {
+			//controllers.ResponseError(c, ErrorInvalidID)
+			err = ErrorInvalidID
+			return nil, err
+		}
+	}
+	return
+}
