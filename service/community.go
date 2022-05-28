@@ -16,12 +16,12 @@ func GetCommunityList() ([]*models.Community, error) {
 }
 
 // GetCommunityDetail 获取社区列表逻辑
-func GetCommunityDetail(id int64) (detail *models.CommunityDetail, err error) {
+func GetCommunityDetail(id int64) (*models.CommunityDetail, error) {
 	return mysql.GetCommunityByID(id)
 }
 
 // CreateCommunityPost 获取帖子详情逻辑
-func CreateCommunityPost(p *models.CommunityPost) (err error) {
+func CreateCommunityPost(post *models.CommunityPost) (err error) {
 	// 1.生成id
 	var id uint64
 	id, err = snowflake.GenID()
@@ -30,13 +30,13 @@ func CreateCommunityPost(p *models.CommunityPost) (err error) {
 			zap.Error(err))
 		return
 	}
-	p.ID = int64(id)
+	post.ID = int64(id)
 	// 2.保存到数据库 并返回
-	return mysql.CreateCommunityPost(p)
+	return mysql.CreateCommunityPost(post)
 }
 
-// GetPostDetail 处理获取帖子详情
-func GetPostDetail(id uint64) (detail *models.ApiPostDetail, err error) {
+// GetPostDetail 获取帖子详情逻辑
+func GetPostDetail(id uint64) (apiPostDetail *models.ApiPostDetail, err error) {
 	post, err := mysql.GetPostDetailByID(id)
 	if err != nil {
 		zap.L().Error("mysql.GetPostDetailByID(id) failed.",
@@ -45,7 +45,7 @@ func GetPostDetail(id uint64) (detail *models.ApiPostDetail, err error) {
 		return
 	}
 	// 1.根据作者id查询作者用户名
-	user, err := mysql.GetAuthorNameById(uint64(post.AuthorID))
+	author, err := mysql.GetAuthorNameById(uint64(post.AuthorID))
 	if err != nil {
 		zap.L().Error("mysql.GetAuthorNameById(post.AuthorID) failed.",
 			zap.Int64("authorID:", post.AuthorID),
@@ -53,17 +53,53 @@ func GetPostDetail(id uint64) (detail *models.ApiPostDetail, err error) {
 		return
 	}
 	// 2.根据社区id查询社区名称
-	communityDetail, err := mysql.GetCommunityByID(post.CommunityID)
+	community, err := mysql.GetCommunityByID(post.CommunityID)
 	if err != nil {
 		zap.L().Error("mysql.GetCommunityNameById(post.CommunityID) failed.",
 			zap.Int64("authorID:", post.CommunityID),
 			zap.Error(err))
 		return
 	}
-	detail = &models.ApiPostDetail{
-		AuthorName:      user.UserName,
-		CommunityDetail: communityDetail,
+	apiPostDetail = &models.ApiPostDetail{
+		AuthorName:      author.UserName,
+		CommunityDetail: community,
 		CommunityPost:   post,
+	}
+	return
+}
+
+// GetPostList 获取帖子列表逻辑
+func GetPostList(page, size int64) (list []*models.ApiPostDetail, err error) {
+	posts, err := mysql.GetPostList(page, size)
+	if err != nil {
+		zap.L().Error("mysql.GetPostList failed.", zap.Error(err))
+		return
+	}
+	list = make([]*models.ApiPostDetail, 0, len(posts))
+	// 循环posts获取用户名和社区名称
+	for _, post := range posts {
+		// 1.根据作者id查询作者用户名
+		author, err := mysql.GetAuthorNameById(uint64(post.AuthorID))
+		if err != nil {
+			zap.L().Error("mysql.GetAuthorNameById(post.AuthorID) failed.",
+				zap.Int64("authorID:", post.AuthorID),
+				zap.Error(err))
+			continue
+		}
+		// 1.根据社区id查询社区名称
+		community, err := mysql.GetCommunityByID(post.CommunityID)
+		if err != nil {
+			zap.L().Error("mysql.GetAuthorNameById(post.AuthorID) failed.",
+				zap.Int64("authorID:", post.AuthorID),
+				zap.Error(err))
+			continue
+		}
+		apiPostDetail := &models.ApiPostDetail{
+			AuthorName:      author.UserName,
+			CommunityDetail: community,
+			CommunityPost:   post,
+		}
+		list = append(list, apiPostDetail)
 	}
 	return
 }

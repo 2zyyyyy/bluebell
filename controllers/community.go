@@ -95,3 +95,21 @@ func PostDetailHandler(c *gin.Context) {
 	}
 	ResponseSuccess(c, detail)
 }
+
+// GetPostListHandler 获取帖子列表函数
+func GetPostListHandler(c *gin.Context) {
+	page, size, err := getPageInfo(c)
+	if err != nil {
+		page = 1
+		size = 10
+	}
+	// 2.获取数据
+	list, err := service.GetPostList(page, size)
+	if err != nil {
+		zap.L().Error("service.GetPostList failed.", zap.Error(err))
+		ResponseError(c, CodeServerBusy)
+		return
+	}
+	// 3.返回响应
+	ResponseSuccess(c, list)
+}
