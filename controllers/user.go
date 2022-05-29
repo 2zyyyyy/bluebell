@@ -65,9 +65,8 @@ func LoginHandler(c *gin.Context) {
 		ResponseErrorWithMsg(c, CodeInvalidParam, removeTopStruct(errs.Translate(trans)))
 		return
 	}
-	fmt.Println(*p)
 	// 2.业务逻辑处理
-	token, err := service.Login(p)
+	user, err := service.Login(p)
 	if err != nil {
 		zap.L().Error("service.Login failed.", zap.String("用户:", p.Username), zap.Error(err))
 		// 判断用户是否不存在
@@ -80,5 +79,9 @@ func LoginHandler(c *gin.Context) {
 		return
 	}
 	// 返回响应
-	ResponseSuccess(c, token)
+	ResponseSuccess(c, gin.H{
+		"user_id":   user.UserID,
+		"user_name": user.UserName,
+		"token":     user.Token,
+	})
 }

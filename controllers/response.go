@@ -7,6 +7,7 @@ import (
 )
 
 /*
+	返回数据格式定义
 	{
 		"code" : 1001,
 		"msg" ： 登录失败,
@@ -17,7 +18,7 @@ import (
 type ResponseData struct {
 	Code ResCode     `json:"code"`
 	Msg  interface{} `json:"msg"`
-	Data interface{} `json:"data"`
+	Data interface{} `json:"data,omitempty"` // 忽略null
 }
 
 func ResponseError(c *gin.Context, code ResCode) {
