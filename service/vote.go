@@ -1,6 +1,7 @@
 package service
 
 import (
+	"errors"
 	"webapp-scaffold/dao/mysql"
 	"webapp-scaffold/dao/redis"
 	"webapp-scaffold/models"
@@ -8,22 +9,9 @@ import (
 	"go.uber.org/zap"
 )
 
-/*
-	投票功能场景分析
-	case 1 direction = 1:
-		1.1 用户没有投过票 投了赞成票
-		1.2 用户投过反对票 改投赞成票
-	case 2 direction = 0:
-		2.1 用户投过赞成票 取消了投票
-		2.2 用户投过反对票 取消了投票
-	case 3 direction = -1:
-		3.1 用户没有投过票 投了赞成票
-		3.2 用户投过赞成票 改投反对票
-	投票功能限制
-	每个帖子自发布之日起7日内允许投票 超过改时间则不允许再投票
-	1.到期之后将redis中保存的帖子对应赞成和反对票存储至mysql中
-	2.到期之后删除 KeyPostVoteZSetPreFix
-*/
+var (
+	ErrNotExist = errors.New("当前post id不存在")
+)
 
 // CommunityVote 帖子投票功能逻辑处理
 func CommunityVote(userID uint64, p *models.ParamCommunityVote) (err error) {
@@ -35,16 +23,26 @@ func CommunityVote(userID uint64, p *models.ParamCommunityVote) (err error) {
 			zap.Error(err))
 		return
 	}
-	if !exist {
+	if exist == false {
 		zap.L().Error("post id not exist.",
 			zap.Uint64("post_id:", p.PostID),
 			zap.Error(err))
-		return
+		return ErrNotExist
 	}
+
+	// 投票
 	err = redis.VoteForCommunity(userID, p.PostID, float64(p.Direction))
 	if err != nil {
-		zap.L().Error("redis.VoteForCommunity(userID, p.PostID, float64(p.Direction)).", zap.Error(err))
+		zap.L().Debug("CommunityVote",
+			zap.Uint64("user_id:", userID),
+			zap.Uint64("post_id:", p.PostID),
+			zap.Int8("direction:", p.Direction),
+			zap.Error(err))
 		return
 	}
-	return
+	zap.L().Debug("CommunityVote",
+		zap.Uint64("user_id:", userID),
+		zap.Uint64("post_id:", p.PostID),
+		zap.Int8("direction:", p.Direction))
+	return redis.VoteForCommunity(userID, p.PostID, float64(p.Direction))
 }

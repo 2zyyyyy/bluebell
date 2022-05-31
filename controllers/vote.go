@@ -4,6 +4,8 @@ import (
 	"webapp-scaffold/models"
 	"webapp-scaffold/service"
 
+	"go.uber.org/zap"
+
 	"github.com/go-playground/validator/v10"
 
 	"github.com/gin-gonic/gin"
@@ -32,9 +34,9 @@ func CommunityVote(c *gin.Context) {
 		return
 	}
 	// 具体投票的业务逻辑
-	err = service.CommunityVote(userID, p)
-	if err != nil {
-		ResponseError(c, CodeInvalidParam)
+	if err := service.CommunityVote(userID, p); err != nil {
+		zap.L().Error(" service.CommunityVote failed.", zap.Error(err))
+		ResponseError(c, CodeServerBusy)
 		return
 	}
 	ResponseSuccess(c, nil)
