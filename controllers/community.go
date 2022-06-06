@@ -10,6 +10,13 @@ import (
 	"github.com/gin-gonic/gin"
 )
 
+const (
+	page       = 10
+	size       = 1
+	orderTime  = "time"
+	orderScore = "score"
+)
+
 // 社区相关
 
 // CommunityHandler 处理获取社区列表的函数
@@ -46,7 +53,7 @@ func CommunityDetailHandler(c *gin.Context) {
 
 // CreatePostHandler 创建帖子函数
 func CreatePostHandler(c *gin.Context) {
-	// 1.获取参数
+	// 1.获取参数并校验
 	post := new(models.CommunityPost)
 	if err := c.ShouldBindJSON(post); err != nil {
 		// 如果参数异常就记录日志并返回错误
@@ -62,9 +69,7 @@ func CreatePostHandler(c *gin.Context) {
 		return
 	}
 	post.AuthorID = int64(userId)
-	// 3.参数校验
-
-	// 4.存储数据
+	// 3.存储数据
 	if err := service.CreateCommunityPost(post); err != nil {
 		// 创建失败 返回错误信息
 		zap.L().Error("service.CreateCommunityPost failed.", zap.Error(err))
@@ -72,7 +77,7 @@ func CreatePostHandler(c *gin.Context) {
 		return
 	}
 	// 4.返回响应
-	ResponseSuccess(c, post)
+	ResponseSuccess(c, nil)
 }
 
 // PostDetailHandler 帖子详情函数
@@ -112,4 +117,26 @@ func GetPostListHandler(c *gin.Context) {
 	}
 	// 3.返回响应
 	ResponseSuccess(c, list)
+}
+
+// GetPostOrderListHandler 根据指定的排序方式返回数据
+func GetPostOrderListHandler(c *gin.Context) {
+	// 初始化结构体并指定默认参数值
+	p := &models.ParamOrderList{
+		Page:  page,
+		Size:  size,
+		Order: orderTime,
+	}
+	// 1.获取参数
+	if err := c.ShouldBindQuery(p); err != nil {
+		zap.L().Error("参数错误", zap.Error(err))
+		ResponseError(c, CodeInvalidParam)
+		return
+	}
+	// 2.去redis查询id列表
+
+	// 3.根据id去数据库查询帖子详情信息
+
+	ResponseSuccess(c, nil)
+	return
 }

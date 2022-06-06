@@ -1,6 +1,7 @@
 package controllers
 
 import (
+	"strconv"
 	"webapp-scaffold/models"
 	"webapp-scaffold/service"
 
@@ -34,7 +35,7 @@ func CommunityVote(c *gin.Context) {
 		return
 	}
 	// 具体投票的业务逻辑
-	if err := service.CommunityVote(userID, p); err != nil {
+	if err := service.CommunityVote(strconv.FormatUint(userID, 10), p); err != nil {
 		zap.L().Error(" service.CommunityVote failed.", zap.Error(err))
 		ResponseError(c, CodeServerBusy)
 		return

@@ -3,7 +3,6 @@ package redis
 import (
 	"errors"
 	"math"
-	"strconv"
 	"time"
 
 	"github.com/go-redis/redis"
@@ -25,41 +24,61 @@ import (
 	2.到期之后删除 KeyPostVoteZSetPreFix */
 
 const (
-	oneWeekSeconds = 70 * 24 * 3600 // 帖子投票过期时间
-	oneTicketScore = 432            // 每票的分数
+	oneWeekSeconds         = 7 * 24 * 3600 // 帖子投票过期时间
+	oneTicketScore float64 = 5             // 每票的分数
 )
 
 var ErrVoteExpire = errors.New("吉时已过")
 
-func VoteForCommunity(userID, postID uint64, value float64) (err error) {
+// CreateCommunityPost 创建帖子存储时间
+func CreateCommunityPost(postID int64) (err error) {
+	// 使用事务更新redis数据
+	pipeline := rdb.TxPipeline()
+	// 更新帖子时间
+	pipeline.ZAdd(getRedisKey(KeyPostTimeZSet), redis.Z{
+		Score:  float64(time.Now().Unix()),
+		Member: postID,
+	})
+	// 更新帖子分数
+	pipeline.ZAdd(getRedisKey(KeyPostScoreZSet), redis.Z{
+		Score:  float64(time.Now().Unix()),
+		Member: postID,
+	})
+	_, err = pipeline.Exec()
+	return
+}
+
+// VoteForCommunity 投票功能函数
+func VoteForCommunity(userID, postID string, value float64) (err error) {
 	// 1.判断投票限制
 	// 从redis获取帖子发布时间
-	postTime := rdb.ZScore(getRedisKey(KeyPostTimeZSet), strconv.FormatUint(postID, 10)).Val()
+	postTime := rdb.ZScore(getRedisKey(KeyPostTimeZSet), postID).Val()
 	if float64(time.Now().Unix())-postTime > oneWeekSeconds {
 		return ErrVoteExpire
 	}
 	//2.更新帖子分数
 	//2.1 查询当前用户给当前帖子的投票记录
-	oldValue := rdb.ZScore(getRedisKey(KeyPostVoteZSetPreFix+strconv.FormatUint(postID, 10)),
-		strconv.FormatUint(userID, 10)).Val()
+	oldValue := rdb.ZScore(getRedisKey(KeyPostVoteZSetPreFix+postID), userID).Val()
 	var op float64
 	if value > oldValue { // 如果当前分数大于历史分数
 		op = 1
 	} else {
 		op = -1
 	}
-	diff := math.Abs(value - oldValue) // 计算两次投票的差值
-	rdb.ZIncrBy(getRedisKey(KeyPostScoreZSet), op*diff*oneTicketScore, strconv.FormatUint(postID, 10))
+	diff := math.Abs(oldValue - value) // 计算两次投票的差值
+	pipeline := rdb.TxPipeline()
+	pipeline.ZIncrBy(getRedisKey(KeyPostScoreZSet), op*diff*oneTicketScore, postID)
 
 	//3.记录用户为该帖子投票的数据
 	if value == 0 {
 		// 取消投票
-		_, err = rdb.ZRem(getRedisKey(KeyPostVoteZSetPreFix+strconv.FormatUint(postID, 10)), postID).Result()
+		pipeline.ZRem(getRedisKey(KeyPostVoteZSetPreFix+postID), postID)
 	} else {
-		_, err = rdb.ZAdd(getRedisKey(KeyPostVoteZSetPreFix+strconv.FormatUint(postID, 10)), redis.Z{
+		pipeline.ZAdd(getRedisKey(KeyPostVoteZSetPreFix+postID), redis.Z{
 			Score:  value, // 赞成/反对
 			Member: userID,
-		}).Result()
+		})
 	}
+	_, err = pipeline.Exec()
 	return
 }

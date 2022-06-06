@@ -2,6 +2,7 @@ package service
 
 import (
 	"webapp-scaffold/dao/mysql"
+	"webapp-scaffold/dao/redis"
 	"webapp-scaffold/models"
 	"webapp-scaffold/pkg/snowflake"
 
@@ -31,8 +32,14 @@ func CreateCommunityPost(post *models.CommunityPost) (err error) {
 		return
 	}
 	post.ID = int64(id)
-	// 2.保存到数据库 并返回
-	return mysql.CreateCommunityPost(post)
+	// 2.保存到数据库并返回
+	err = mysql.CreateCommunityPost(post)
+	if err != nil {
+		return err
+	}
+	// 保存到redis
+	err = redis.CreateCommunityPost(int64(id))
+	return
 }
 
 // GetPostDetail 获取帖子详情逻辑
