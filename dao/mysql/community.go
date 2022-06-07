@@ -2,7 +2,10 @@ package mysql
 
 import (
 	"database/sql"
+	"strings"
 	"webapp-scaffold/models"
+
+	"github.com/jmoiron/sqlx"
 
 	"go.uber.org/zap"
 )
@@ -98,4 +101,33 @@ func CheckPostExist(id string) (exist bool, err error) {
 		return true, nil
 	}
 	return exist, nil
+}
+
+// GetPostOrderList 根据redis查询的id查询对应的帖子详情
+func GetPostOrderList(ids []string) (postList []*models.CommunityPost, err error) {
+	sqlStr := `select post_id, title, content, author_id, community_id, create_time
+				from post
+				where post_id in (?) 
+				order by FIND_IN_SET(post_id, ?)`
+	query, args, err := sqlx.In(sqlStr, ids, strings.Join(ids, ","))
+
+	/*
+		FIND_IN_SET(str,strList)
+
+		str 要查询的字符串
+		strList 字段名，参数以“,”分隔，如(1,2,6,8)
+		查询字段(strList)中包含的结果，返回结果null或记录。
+		strList 中，则返回值的范围在 1 到 N 之间。
+		一个字符串列表就是一个由一些被 ‘,’ 符号分开的子链组成的字符串。如果第一个参数是一个常数字符串，
+		而第二个是type SET列，则FIND_IN_SET() 函数被优化，使用比特计算。
+		strList strList 为空字符串，则返回值为 0 。
+		如任意一个参数为NULL，则返回值为 NULL。这个函数在第一个参数包含一个逗号(‘,’)时将无法正常运行。
+	*/
+	if err != nil {
+		return nil, err
+	}
+	// sqlx.In 返回带 `?` bind-var的查询语句, 我们使用Rebind()重新绑定它
+	query = db.Rebind(query)
+	err = db.Select(&postList, query, args...)
+	return
 }

@@ -10,13 +10,6 @@ import (
 	"github.com/gin-gonic/gin"
 )
 
-const (
-	page       = 10
-	size       = 1
-	orderTime  = "time"
-	orderScore = "score"
-)
-
 // 社区相关
 
 // CommunityHandler 处理获取社区列表的函数
@@ -123,20 +116,24 @@ func GetPostListHandler(c *gin.Context) {
 func GetPostOrderListHandler(c *gin.Context) {
 	// 初始化结构体并指定默认参数值
 	p := &models.ParamOrderList{
-		Page:  page,
-		Size:  size,
-		Order: orderTime,
+		Page:  models.Page,
+		Size:  models.Size,
+		Order: models.OrderTime,
 	}
-	// 1.获取参数
+	// 1.获取参数校验
 	if err := c.ShouldBindQuery(p); err != nil {
 		zap.L().Error("参数错误", zap.Error(err))
 		ResponseError(c, CodeInvalidParam)
 		return
 	}
 	// 2.去redis查询id列表
-
-	// 3.根据id去数据库查询帖子详情信息
-
-	ResponseSuccess(c, nil)
+	list, err := service.GetPostOrderList(p)
+	if err != nil {
+		zap.L().Error("service.GetPostOrderList failed.", zap.Error(err))
+		ResponseError(c, CodeServerBusy)
+		return
+	}
+	// 3.返回响应
+	ResponseSuccess(c, list)
 	return
 }

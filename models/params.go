@@ -1,5 +1,12 @@
 package models
 
+const (
+	Page       = 10
+	Size       = 1
+	OrderTime  = "time"
+	OrderScore = "score"
+)
+
 // ParamSignUp 注册请求参数
 type ParamSignUp struct {
 	Username   string `json:"username" binding:"required"`
