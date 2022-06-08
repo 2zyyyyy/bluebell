@@ -970,3 +970,51 @@
 {"level":"INFO","time":"2022-06-07T22:41:29.839+0800","caller":"logger/logger.go:83","msg":"/api/v1/community/vote","status":200,"method":"POST","path":"/api/v1/community/vote","query":"","ip":"127.0.0.1","user-agent":"PostmanRuntime/7.29.0","error":"","cost":0.0015011}
 {"level":"INFO","time":"2022-06-07T22:42:08.102+0800","caller":"bluebell/main.go:76","msg":"shutdown server..."}
 {"level":"INFO","time":"2022-06-07T22:42:08.106+0800","caller":"bluebell/main.go:84","msg":"server exiting"}
+{"level":"DEBUG","time":"2022-06-08T21:22:31.241+0800","caller":"bluebell/main.go:34","msg":"logger init success!!!"}
+{"level":"INFO","time":"2022-06-08T21:22:31.247+0800","caller":"bluebell/main.go:58","msg":":8080"}
+{"level":"DEBUG","time":"2022-06-08T21:22:57.961+0800","caller":"service/community.go:126","msg":"redis ids","ids":["22845724777512961","22845712446259201","22696360914452481","22673657230786561"]}
+{"level":"INFO","time":"2022-06-08T21:22:57.963+0800","caller":"service/community.go:129","msg":"mysql posts","posts":[{"id":22845724777512961,"author_id":19953053381689345,"community_id":1,"status":0,"title":"四次点亮","content":"创建帖子->redis写入帖子时间和分数数据->判断是否已过投票时间","create_time":"2022-06-07T22:31:53Z"},{"id":22845712446259201,"author_id":19953053381689345,"community_id":1,"status":0,"title":"三次点亮","content":"创建帖子->redis写入帖子时间和分数数据->判断是否已过投票时间","create_time":"2022-06-07T22:31:45Z"},{"id":22696360914452481,"author_id":19953053381689345,"community_id":1,"status":0,"title":"二次点亮","content":"创建帖子->redis写入帖子时间和分数数据->判断是否已过投票时间","create_time":"2022-06-06T21:48:05Z"},{"id":22673657230786561,"author_id":19953053381689345,"community_id":1,"status":0,"title":"一次点亮","content":"创建帖子->redis写入帖子时间和分数数据->判断是否已过投票时间","create_time":"2022-06-06T18:02:32Z"}]}
+{"level":"DEBUG","time":"2022-06-08T21:22:57.964+0800","caller":"redis/communityPost.go:47","msg":"cmders:","cmders":[{},{},{},{}]}
+{"level":"INFO","time":"2022-06-08T21:22:57.967+0800","caller":"logger/logger.go:83","msg":"/api/v1/community/post/orderList","status":200,"method":"GET","path":"/api/v1/community/post/orderList","query":"page=1&size=10&order=score","ip":"127.0.0.1","user-agent":"PostmanRuntime/7.29.0","error":"","cost":0.0067508}
+{"level":"DEBUG","time":"2022-06-08T21:23:36.324+0800","caller":"mysql/community.go:99","msg":"select count from post","count:":1}
+{"level":"DEBUG","time":"2022-06-08T21:23:36.324+0800","caller":"service/vote.go:45","msg":"CommunityVote","user_id:":"19953053381689345","post_id:":22845724777512961,"direction:":1}
+{"level":"INFO","time":"2022-06-08T21:23:36.325+0800","caller":"logger/logger.go:83","msg":"/api/v1/community/vote","status":200,"method":"POST","path":"/api/v1/community/vote","query":"","ip":"127.0.0.1","user-agent":"PostmanRuntime/7.29.0","error":"","cost":0.0027751}
+{"level":"DEBUG","time":"2022-06-08T21:25:29.713+0800","caller":"bluebell/main.go:34","msg":"logger init success!!!"}
+{"level":"INFO","time":"2022-06-08T21:25:29.723+0800","caller":"bluebell/main.go:58","msg":":8080"}
+{"level":"DEBUG","time":"2022-06-08T21:25:38.635+0800","caller":"service/community.go:126","msg":"redis ids","ids":["22845724777512961","22845712446259201","22696360914452481","22673657230786561"]}
+{"level":"INFO","time":"2022-06-08T21:25:38.636+0800","caller":"service/community.go:129","msg":"mysql posts","posts":[{"id":22845724777512961,"author_id":19953053381689345,"community_id":1,"status":0,"title":"四次点亮","content":"创建帖子->redis写入帖子时间和分数数据->判断是否已过投票时间","create_time":"2022-06-07T22:31:53Z"},{"id":22845712446259201,"author_id":19953053381689345,"community_id":1,"status":0,"title":"三次点亮","content":"创建帖子->redis写入帖子时间和分数数据->判断是否已过投票时间","create_time":"2022-06-07T22:31:45Z"},{"id":22696360914452481,"author_id":19953053381689345,"community_id":1,"status":0,"title":"二次点亮","content":"创建帖子->redis写入帖子时间和分数数据->判断是否已过投票时间","create_time":"2022-06-06T21:48:05Z"},{"id":22673657230786561,"author_id":19953053381689345,"community_id":1,"status":0,"title":"一次点亮","content":"创建帖子->redis写入帖子时间和分数数据->判断是否已过投票时间","create_time":"2022-06-06T18:02:32Z"}]}
+{"level":"DEBUG","time":"2022-06-08T21:25:38.637+0800","caller":"redis/communityPost.go:47","msg":"cmders:","cmders":[{},{},{},{}]}
+{"level":"DEBUG","time":"2022-06-08T21:25:38.637+0800","caller":"redis/communityPost.go:53","msg":"data:","data":[1,0,0,0]}
+{"level":"INFO","time":"2022-06-08T21:25:38.639+0800","caller":"logger/logger.go:83","msg":"/api/v1/community/post/orderList","status":200,"method":"GET","path":"/api/v1/community/post/orderList","query":"page=1&size=10&order=score","ip":"127.0.0.1","user-agent":"PostmanRuntime/7.29.0","error":"","cost":0.0047398}
+{"level":"DEBUG","time":"2022-06-08T21:26:11.020+0800","caller":"mysql/community.go:99","msg":"select count from post","count:":1}
+{"level":"DEBUG","time":"2022-06-08T21:26:11.021+0800","caller":"service/vote.go:45","msg":"CommunityVote","user_id:":"19953053381689345","post_id:":22845712446259201,"direction:":1}
+{"level":"INFO","time":"2022-06-08T21:26:11.021+0800","caller":"logger/logger.go:83","msg":"/api/v1/community/vote","status":200,"method":"POST","path":"/api/v1/community/vote","query":"","ip":"127.0.0.1","user-agent":"PostmanRuntime/7.29.0","error":"","cost":0.002101}
+{"level":"DEBUG","time":"2022-06-08T21:26:14.894+0800","caller":"service/community.go:126","msg":"redis ids","ids":["22845724777512961","22845712446259201","22696360914452481","22673657230786561"]}
+{"level":"INFO","time":"2022-06-08T21:26:14.895+0800","caller":"service/community.go:129","msg":"mysql posts","posts":[{"id":22845724777512961,"author_id":19953053381689345,"community_id":1,"status":0,"title":"四次点亮","content":"创建帖子->redis写入帖子时间和分数数据->判断是否已过投票时间","create_time":"2022-06-07T22:31:53Z"},{"id":22845712446259201,"author_id":19953053381689345,"community_id":1,"status":0,"title":"三次点亮","content":"创建帖子->redis写入帖子时间和分数数据->判断是否已过投票时间","create_time":"2022-06-07T22:31:45Z"},{"id":22696360914452481,"author_id":19953053381689345,"community_id":1,"status":0,"title":"二次点亮","content":"创建帖子->redis写入帖子时间和分数数据->判断是否已过投票时间","create_time":"2022-06-06T21:48:05Z"},{"id":22673657230786561,"author_id":19953053381689345,"community_id":1,"status":0,"title":"一次点亮","content":"创建帖子->redis写入帖子时间和分数数据->判断是否已过投票时间","create_time":"2022-06-06T18:02:32Z"}]}
+{"level":"DEBUG","time":"2022-06-08T21:26:14.896+0800","caller":"redis/communityPost.go:47","msg":"cmders:","cmders":[{},{},{},{}]}
+{"level":"DEBUG","time":"2022-06-08T21:26:14.897+0800","caller":"redis/communityPost.go:53","msg":"data:","data":[1,1,0,0]}
+{"level":"INFO","time":"2022-06-08T21:26:14.901+0800","caller":"logger/logger.go:83","msg":"/api/v1/community/post/orderList","status":200,"method":"GET","path":"/api/v1/community/post/orderList","query":"page=1&size=10&order=score","ip":"127.0.0.1","user-agent":"PostmanRuntime/7.29.0","error":"","cost":0.0072354}
+{"level":"DEBUG","time":"2022-06-08T21:29:00.911+0800","caller":"bluebell/main.go:34","msg":"logger init success!!!"}
+{"level":"INFO","time":"2022-06-08T21:29:00.917+0800","caller":"bluebell/main.go:58","msg":":8080"}
+{"level":"DEBUG","time":"2022-06-08T21:30:17.960+0800","caller":"bluebell/main.go:34","msg":"logger init success!!!"}
+{"level":"INFO","time":"2022-06-08T21:30:17.965+0800","caller":"bluebell/main.go:58","msg":":8080"}
+{"level":"DEBUG","time":"2022-06-08T21:36:43.710+0800","caller":"mysql/community.go:99","msg":"select count from post","count:":1}
+{"level":"DEBUG","time":"2022-06-08T21:36:43.711+0800","caller":"service/vote.go:38","msg":"CommunityVote","user_id:":"19953053381689345","post_id:":22845712446259201,"direction:":1,"error":"不允许重复投票"}
+{"level":"ERROR","time":"2022-06-08T21:36:43.711+0800","caller":"controllers/vote.go:39","msg":" service.CommunityVote failed.","error":"不允许重复投票"}
+{"level":"INFO","time":"2022-06-08T21:36:43.712+0800","caller":"logger/logger.go:83","msg":"/api/v1/community/vote","status":200,"method":"POST","path":"/api/v1/community/vote","query":"","ip":"127.0.0.1","user-agent":"PostmanRuntime/7.29.0","error":"","cost":0.0032597}
+{"level":"DEBUG","time":"2022-06-08T21:44:04.047+0800","caller":"bluebell/main.go:34","msg":"logger init success!!!"}
+{"level":"INFO","time":"2022-06-08T21:44:04.051+0800","caller":"bluebell/main.go:58","msg":":8080"}
+{"level":"DEBUG","time":"2022-06-08T21:44:25.180+0800","caller":"bluebell/main.go:34","msg":"logger init success!!!"}
+{"level":"INFO","time":"2022-06-08T21:44:25.186+0800","caller":"bluebell/main.go:58","msg":":8080"}
+{"level":"DEBUG","time":"2022-06-08T21:44:28.828+0800","caller":"bluebell/main.go:34","msg":"logger init success!!!"}
+{"level":"INFO","time":"2022-06-08T21:44:28.834+0800","caller":"bluebell/main.go:58","msg":":8080"}
+{"level":"DEBUG","time":"2022-06-08T21:45:12.971+0800","caller":"bluebell/main.go:34","msg":"logger init success!!!"}
+{"level":"INFO","time":"2022-06-08T21:45:12.976+0800","caller":"bluebell/main.go:58","msg":":8080"}
+{"level":"DEBUG","time":"2022-06-08T21:50:51.314+0800","caller":"bluebell/main.go:34","msg":"logger init success!!!"}
+{"level":"INFO","time":"2022-06-08T21:50:51.331+0800","caller":"bluebell/main.go:58","msg":":8080"}
+{"level":"DEBUG","time":"2022-06-08T21:51:46.923+0800","caller":"bluebell/main.go:34","msg":"logger init success!!!"}
+{"level":"INFO","time":"2022-06-08T21:51:46.928+0800","caller":"bluebell/main.go:58","msg":":8080"}
+{"level":"DEBUG","time":"2022-06-08T21:52:03.951+0800","caller":"bluebell/main.go:34","msg":"logger init success!!!"}
+{"level":"INFO","time":"2022-06-08T21:52:03.956+0800","caller":"bluebell/main.go:58","msg":":8080"}
+{"level":"DEBUG","time":"2022-06-08T21:52:26.777+0800","caller":"bluebell/main.go:34","msg":"logger init success!!!"}
+{"level":"INFO","time":"2022-06-08T21:52:26.784+0800","caller":"bluebell/main.go:58","msg":":8080"}

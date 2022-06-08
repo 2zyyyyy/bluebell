@@ -33,6 +33,8 @@ func SetUpRouter() *gin.Engine {
 	{
 		v1.GET("/community", controllers.CommunityHandler)           // 社区列表
 		v1.GET("/community/:id", controllers.CommunityDetailHandler) // 社区详情
+		// 根据社区返回对应社区下的帖子
+		v1.GET("/community/post/list/:id", controllers.GetCommunityPostListHandler)
 
 		v1.POST("/community/post", controllers.CreatePostHandler)      // 创建帖子
 		v1.GET("/community/post/:id", controllers.PostDetailHandler)   // 帖子详情
