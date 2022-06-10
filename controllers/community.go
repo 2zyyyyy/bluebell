@@ -142,9 +142,11 @@ func GetPostOrderListHandler(c *gin.Context) {
 func GetCommunityPostListHandler(c *gin.Context) {
 	// 初始化结构体并指定默认参数值
 	p := &models.ParamCommunityPostList{
-		PL:    models.Page,
-		Size:  models.Size,
-		Order: models.OrderTime,
+		ParamOrderList: &models.ParamOrderList{
+			Page:  models.Page,
+			Size:  models.Page,
+			Order: models.OrderTime,
+		},
 	}
 	// 1.获取参数校验
 	if err := c.ShouldBindQuery(p); err != nil {
@@ -153,13 +155,13 @@ func GetCommunityPostListHandler(c *gin.Context) {
 		return
 	}
 	// 2.去redis查询id列表
-	list, err := service.GetCommunityPostList(p)
+	data, err := service.GetCommunityPostList(p)
 	if err != nil {
-		zap.L().Error("service.GetPostOrderList failed.", zap.Error(err))
+		zap.L().Error("service.GetCommunityPostList failed.", zap.Error(err))
 		ResponseError(c, CodeServerBusy)
 		return
 	}
 	// 3.返回响应
-	ResponseSuccess(c, list)
+	ResponseSuccess(c, data)
 	return
 }

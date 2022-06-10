@@ -31,6 +31,6 @@ type ParamOrderList struct {
 
 // ParamCommunityPostList 社区下帖子列表的接口提
 type ParamCommunityPostList struct {
-	ParamOrderList
+	*ParamOrderList
 	CommunityID int64 `json:"community_id" form:"community_id"`
 }

@@ -3,6 +3,7 @@ package redis
 import (
 	"errors"
 	"math"
+	"strconv"
 	"time"
 
 	"github.com/go-redis/redis"
@@ -29,12 +30,12 @@ const (
 )
 
 var (
-	ErrVoteExpire   = errors.New("吉时已过")
-	ErrVoteRepested = errors.New("不允许重复投票")
+	ErrVoteExpire     = errors.New("吉时已过")
+	ErrVoteRepetition = errors.New("不允许重复投票")
 )
 
 // CreateCommunityPost 创建帖子存储时间
-func CreateCommunityPost(postID int64) (err error) {
+func CreateCommunityPost(postID, communityID int64) (err error) {
 	// 使用事务更新redis数据
 	pipeline := rdb.TxPipeline()
 	// 更新帖子时间
@@ -47,6 +48,9 @@ func CreateCommunityPost(postID int64) (err error) {
 		Score:  float64(time.Now().Unix()),
 		Member: postID,
 	})
+	// 把帖子id加入到社区的set中
+	communityKey := getRedisKey(KeyCommunitySetPreFix + strconv.FormatInt(communityID, 10))
+	pipeline.SAdd(communityKey, postID)
 	_, err = pipeline.Exec()
 	return
 }
@@ -65,7 +69,7 @@ func VoteForCommunity(userID, postID string, value float64) (err error) {
 	var op float64
 	// 校验是否重复投票
 	if value == oldValue {
-		return ErrVoteRepested
+		return ErrVoteRepetition
 	}
 	if value > oldValue { // 如果当前分数大于历史分数
 		op = 1

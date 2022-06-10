@@ -21,8 +21,8 @@ func GetCommunityDetail(id int64) (*models.CommunityDetail, error) {
 	return mysql.GetCommunityByID(id)
 }
 
-// CreateCommunityPost 获取帖子详情逻辑
-func CreateCommunityPost(post *models.CommunityPost) (err error) {
+// CreateCommunityPost 创建帖子
+func CreateCommunityPost(p *models.CommunityPost) (err error) {
 	// 1.生成id
 	var id uint64
 	id, err = snowflake.GenID()
@@ -31,14 +31,14 @@ func CreateCommunityPost(post *models.CommunityPost) (err error) {
 			zap.Error(err))
 		return
 	}
-	post.ID = int64(id)
+	p.ID = int64(id)
 	// 2.保存到数据库并返回
-	err = mysql.CreateCommunityPost(post)
+	err = mysql.CreateCommunityPost(p)
 	if err != nil {
 		return err
 	}
 	// 保存到redis
-	err = redis.CreateCommunityPost(int64(id))
+	err = redis.CreateCommunityPost(int64(id), p.CommunityID)
 	return
 }
 
@@ -161,13 +161,13 @@ func GetPostOrderList(p *models.ParamOrderList) (data []*models.ApiPostDetail, e
 // GetCommunityPostList 根据社区id返回帖子
 func GetCommunityPostList(p *models.ParamCommunityPostList) (data []*models.ApiPostDetail, err error) {
 	// 1.去redis查询id列表
-	ids, err := redis.GetPostListByID(p)
+	ids, err := redis.GetCommunityPostListByID(p)
 	if err != nil {
 		return
 	}
 	// 处理redis.ids查询结果为空
 	if len(ids) == 0 {
-		zap.L().Warn("redis.GetPostListByID(p) return 0 row")
+		zap.L().Warn("redis.GetCommunityPostListByID(p) return 0 row")
 		return
 	}
 	zap.L().Debug("redis ids", zap.Any("ids", ids))
@@ -202,6 +202,5 @@ func GetCommunityPostList(p *models.ParamCommunityPostList) (data []*models.ApiP
 		}
 		data = append(data, apiPostDetail)
 	}
-	return
 	return
 }
