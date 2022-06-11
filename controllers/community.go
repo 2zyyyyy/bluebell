@@ -126,38 +126,10 @@ func GetPostOrderListHandler(c *gin.Context) {
 		ResponseError(c, CodeInvalidParam)
 		return
 	}
-	// 2.去redis查询id列表
-	list, err := service.GetPostOrderList(p)
+	// 2.获取数据
+	data, err := service.GetPost(p)
 	if err != nil {
-		zap.L().Error("service.GetPostOrderList failed.", zap.Error(err))
-		ResponseError(c, CodeServerBusy)
-		return
-	}
-	// 3.返回响应
-	ResponseSuccess(c, list)
-	return
-}
-
-// GetCommunityPostListHandler 返回指定社区下帖子
-func GetCommunityPostListHandler(c *gin.Context) {
-	// 初始化结构体并指定默认参数值
-	p := &models.ParamCommunityPostList{
-		ParamOrderList: &models.ParamOrderList{
-			Page:  models.Page,
-			Size:  models.Page,
-			Order: models.OrderTime,
-		},
-	}
-	// 1.获取参数校验
-	if err := c.ShouldBindQuery(p); err != nil {
-		zap.L().Error("参数错误", zap.Error(err))
-		ResponseError(c, CodeInvalidParam)
-		return
-	}
-	// 2.去redis查询id列表
-	data, err := service.GetCommunityPostList(p)
-	if err != nil {
-		zap.L().Error("service.GetCommunityPostList failed.", zap.Error(err))
+		zap.L().Error("service.GetPost failed.", zap.Error(err))
 		ResponseError(c, CodeServerBusy)
 		return
 	}
@@ -165,3 +137,31 @@ func GetCommunityPostListHandler(c *gin.Context) {
 	ResponseSuccess(c, data)
 	return
 }
+
+// GetCommunityPostListHandler 返回指定社区下帖子
+//func GetCommunityPostListHandler(c *gin.Context) {
+//	// 初始化结构体并指定默认参数值
+//	p := &models.ParamCommunityPostList{
+//		ParamOrderList: &models.ParamOrderList{
+//			Page:  models.Page,
+//			Size:  models.Page,
+//			Order: models.OrderTime,
+//		},
+//	}
+//	// 1.获取参数校验
+//	if err := c.ShouldBindQuery(p); err != nil {
+//		zap.L().Error("参数错误", zap.Error(err))
+//		ResponseError(c, CodeInvalidParam)
+//		return
+//	}
+//	// 2.去redis查询id列表
+//	data, err := service.GetCommunityPostList(p)
+//	if err != nil {
+//		zap.L().Error("service.GetCommunityPostList failed.", zap.Error(err))
+//		ResponseError(c, CodeServerBusy)
+//		return
+//	}
+//	// 3.返回响应
+//	ResponseSuccess(c, data)
+//	return
+//}

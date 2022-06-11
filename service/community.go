@@ -159,7 +159,7 @@ func GetPostOrderList(p *models.ParamOrderList) (data []*models.ApiPostDetail, e
 }
 
 // GetCommunityPostList 根据社区id返回帖子
-func GetCommunityPostList(p *models.ParamCommunityPostList) (data []*models.ApiPostDetail, err error) {
+func GetCommunityPostList(p *models.ParamOrderList) (data []*models.ApiPostDetail, err error) {
 	// 1.去redis查询id列表
 	ids, err := redis.GetCommunityPostListByID(p)
 	if err != nil {
@@ -201,6 +201,22 @@ func GetCommunityPostList(p *models.ParamCommunityPostList) (data []*models.ApiP
 			CommunityPost:   post,
 		}
 		data = append(data, apiPostDetail)
+	}
+	return
+}
+
+// GetPost 将两个查询逻辑合并
+func GetPost(p *models.ParamOrderList) (data []*models.ApiPostDetail, err error) {
+	// 判断入参的社区id是否为空
+	if p.CommunityID == 0 {
+		// 为空则查所有
+		data, err = GetPostOrderList(p)
+	} else {
+		// 根据社区id查询
+		data, err = GetCommunityPostList(p)
+	}
+	if err != nil {
+		zap.L().Error("GetPost failed.", zap.Error(err))
 	}
 	return
 }
