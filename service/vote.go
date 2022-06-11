@@ -1,11 +1,11 @@
 package service
 
 import (
+	"bluebell/dao/mysql"
+	"bluebell/dao/redis"
+	"bluebell/models"
 	"errors"
 	"strconv"
-	"webapp-scaffold/dao/mysql"
-	"webapp-scaffold/dao/redis"
-	"webapp-scaffold/models"
 
 	"go.uber.org/zap"
 )

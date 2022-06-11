@@ -1,6 +1,12 @@
 package main
 
 import (
+	"bluebell/dao/mysql"
+	"bluebell/dao/redis"
+	"bluebell/logger"
+	"bluebell/pkg/snowflake"
+	"bluebell/routers"
+	"bluebell/settings"
 	"context"
 	"fmt"
 	"net/http"
@@ -8,15 +14,24 @@ import (
 	"os/signal"
 	"syscall"
 	"time"
-	"webapp-scaffold/dao/mysql"
-	"webapp-scaffold/dao/redis"
-	"webapp-scaffold/logger"
-	"webapp-scaffold/pkg/snowflake"
-	"webapp-scaffold/routers"
-	"webapp-scaffold/settings"
 
 	"go.uber.org/zap"
 )
+
+// @title bluebell项目接口文档
+// @version 1.0
+// @description Go Web 实战服务端接口文档
+// @termsOfService http://swagger.io/terms/
+
+// @contact.name
+// @contact.url http://www.swagger.io/support
+// @contact.email support@swagger.io
+
+// @license.name Apache 2.0
+// @license.url http://www.apache.org/licenses/LICENSE-2.0.html
+
+// @host http://127.0.0.1:8080
+// @BasePath: host/api/v1/
 
 func main() {
 	// 1.加载配置

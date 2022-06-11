@@ -1,12 +1,11 @@
 package redis
 
 import (
+	"bluebell/models"
 	"strconv"
 	"time"
-	"webapp-scaffold/models"
 
 	"github.com/go-redis/redis"
-	"go.uber.org/zap"
 )
 
 func getIDsFormKey(key string, page, size int64) ([]string, error) {
@@ -51,13 +50,11 @@ func GetPostVoteData(ids []string) (data []int64, err error) {
 	if err != nil {
 		return nil, err
 	}
-	zap.L().Debug("cmders:", zap.Any("cmders", cmders))
 	data = make([]int64, 0, len(cmders))
 	for _, cmder := range cmders {
 		v := cmder.(*redis.IntCmd).Val()
 		data = append(data, v)
 	}
-	zap.L().Debug("data:", zap.Any("data", data))
 	return
 }
 

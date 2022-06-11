@@ -1,0 +1,65 @@
+definitions:
+  controllers._ResponsePostDetail:
+    properties:
+      code:
+        description: 状态码
+        type: integer
+      data:
+        $ref: '#/definitions/models.CommunityDetail'
+        description: 数据
+      message:
+        description: 提示信息
+        type: string
+    type: object
+  models.CommunityDetail:
+    properties:
+      create_time:
+        type: string
+      id:
+        type: integer
+      introduction:
+        type: string
+      name:
+        type: string
+    type: object
+host: http://127.0.0.1:8080
+info:
+  contact:
+    email: 2zyyyyy4dev@gmail.com
+    name: 万里
+    url: https://github.com/2zyyyyy
+  description: test information
+  license:
+    name: Apache 2.0
+    url: http://www.apache.org/licenses/LICENSE-2.0.html
+  termsOfService: http://swagger.io/terms/
+  title: bluebell项目接口文档
+  version: "1.0"
+paths:
+  /community:
+    get:
+      consumes:
+      - application/json
+      description: 查询社区列表接口
+      parameters:
+      - description: 社区id
+        in: query
+        name: id
+        type: integer
+      - description: 社区名称
+        in: query
+        name: name
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/controllers._ResponsePostDetail'
+      security:
+      - ApiKeyAuth: []
+      summary: 社区列表接口
+      tags:
+      - 社区相关接口
+swagger: "2.0"

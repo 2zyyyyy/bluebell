@@ -1,9 +1,9 @@
 package mysql
 
 import (
+	"bluebell/models"
 	"database/sql"
 	"strings"
-	"webapp-scaffold/models"
 
 	"github.com/jmoiron/sqlx"
 

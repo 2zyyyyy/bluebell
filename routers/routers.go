@@ -1,12 +1,17 @@
 package routers
 
 import (
+	"bluebell/controllers"
+	"bluebell/logger"
+	"bluebell/middlewares"
 	"net/http"
-	"webapp-scaffold/controllers"
-	"webapp-scaffold/logger"
-	"webapp-scaffold/middlewares"
 
 	"go.uber.org/zap"
+
+	_ "bluebell/docs" // 千万不要忘了导入把你上一步生成的docs
+
+	swaggerFiles "github.com/swaggo/files"
+	gs "github.com/swaggo/gin-swagger"
 
 	"github.com/gin-gonic/gin"
 )
@@ -21,6 +26,9 @@ func SetUpRouter() *gin.Engine {
 		zap.L().Error("controllers.InitTrans", zap.Error(err))
 		return nil
 	}
+
+	// swag-gin
+	r.GET("/swagger/*any", gs.WrapHandler(swaggerFiles.Handler))
 
 	v1 := r.Group("/api/v1")
 

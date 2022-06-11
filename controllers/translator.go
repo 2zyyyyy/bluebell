@@ -1,10 +1,10 @@
 package controllers
 
 import (
+	"bluebell/models"
 	"fmt"
 	"reflect"
 	"strings"
-	"webapp-scaffold/models"
 
 	zhTranslations "github.com/go-playground/validator/v10/translations/zh"
 

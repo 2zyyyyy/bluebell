@@ -1,10 +1,10 @@
 package service
 
 import (
-	"webapp-scaffold/dao/mysql"
-	"webapp-scaffold/dao/redis"
-	"webapp-scaffold/models"
-	"webapp-scaffold/pkg/snowflake"
+	"bluebell/dao/mysql"
+	"bluebell/dao/redis"
+	"bluebell/models"
+	"bluebell/pkg/snowflake"
 
 	"go.uber.org/zap"
 )

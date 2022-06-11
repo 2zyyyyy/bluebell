@@ -1,8 +1,8 @@
 package redis
 
 import (
+	"bluebell/settings"
 	"fmt"
-	"webapp-scaffold/settings"
 
 	"github.com/go-redis/redis"
 	"go.uber.org/zap"

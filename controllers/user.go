@@ -1,11 +1,11 @@
 package controllers
 
 import (
+	"bluebell/dao/mysql"
+	"bluebell/models"
+	"bluebell/service"
 	"errors"
 	"fmt"
-	"webapp-scaffold/dao/mysql"
-	"webapp-scaffold/models"
-	"webapp-scaffold/service"
 
 	"github.com/go-playground/validator/v10"
 

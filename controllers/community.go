@@ -1,9 +1,9 @@
 package controllers
 
 import (
+	"bluebell/models"
+	"bluebell/service"
 	"strconv"
-	"webapp-scaffold/models"
-	"webapp-scaffold/service"
 
 	"go.uber.org/zap"
 
@@ -13,6 +13,15 @@ import (
 // 社区相关
 
 // CommunityHandler 处理获取社区列表的函数
+// @Summary 社区列表接口
+// @Description 查询社区列表接口
+// @Tags 社区相关接口
+// @Accept application/json
+// @Produce application/json
+// @Param object query models.Community false "test"
+// @Security ApiKeyAuth
+// @Success 200 {object} _ResponsePostDetail
+// @Router /community [get]
 func CommunityHandler(c *gin.Context) {
 	// 1.查询到所有社区的信息(community_id, community_name)
 	list, err := service.GetCommunityList()
@@ -88,7 +97,8 @@ func PostDetailHandler(c *gin.Context) {
 	detail, err := service.GetPostDetail(uint64(postId))
 	if err != nil {
 		zap.L().Error("service.GetPostDetail failed.", zap.Error(err))
-		ResponseError(c, CodeServerBusy)
+		// 未查询到就返回空
+		ResponseError(c, CodeDataIsNull)
 		return
 	}
 	ResponseSuccess(c, detail)
@@ -131,6 +141,11 @@ func GetPostOrderListHandler(c *gin.Context) {
 	if err != nil {
 		zap.L().Error("service.GetPost failed.", zap.Error(err))
 		ResponseError(c, CodeServerBusy)
+		return
+	}
+	if len(data) == 0 {
+		zap.L().Debug("查询结果为空", zap.Any("data:", data))
+		ResponseError(c, CodeDataIsNull)
 		return
 	}
 	// 3.返回响应

@@ -16,6 +16,8 @@ const (
 	CodeInsertFailed
 
 	CodePostInvalid
+
+	CodeDataIsNull
 )
 
 var codeMsg = map[ResCode]string{
@@ -32,6 +34,8 @@ var codeMsg = map[ResCode]string{
 	CodeInsertFailed: "写入数据失败",
 
 	CodePostInvalid: "当前PostID错误",
+
+	CodeDataIsNull: "查询结果为空",
 }
 
 func (code ResCode) Msg() (msg string) {

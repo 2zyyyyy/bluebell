@@ -1,9 +1,9 @@
 package controllers
 
 import (
+	"bluebell/models"
+	"bluebell/service"
 	"strconv"
-	"webapp-scaffold/models"
-	"webapp-scaffold/service"
 
 	"go.uber.org/zap"
 
