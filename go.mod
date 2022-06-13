@@ -22,6 +22,7 @@ require (
 	github.com/pelletier/go-toml/v2 v2.0.2 // indirect
 	github.com/sony/sonyflake v1.0.0
 	github.com/spf13/viper v1.11.0
+	github.com/stretchr/testify v1.7.2 // indirect
 	github.com/swaggo/files v0.0.0-20220610200504-28940afbdbfe // indirect
 	github.com/swaggo/gin-swagger v1.5.0 // indirect
 	github.com/swaggo/swag v1.8.2
