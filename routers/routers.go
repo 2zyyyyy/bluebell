@@ -48,6 +48,7 @@ func SetUpRouter() *gin.Engine {
 		v1.POST("/community/post", controllers.CreatePostHandler)      // 创建帖子
 		v1.GET("/community/post/:id", controllers.PostDetailHandler)   // 帖子详情
 		v1.GET("/community/post/list", controllers.GetPostListHandler) // 帖子列表
+
 		// 帖子列表（加强版,可以根据指定的排序方式返回数据）
 		v1.GET("/community/post/orderList", controllers.GetPostOrderListHandler)
 

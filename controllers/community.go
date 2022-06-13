@@ -18,7 +18,7 @@ import (
 // @Tags 社区相关接口
 // @Accept application/json
 // @Produce application/json
-// @Param object query models.Community false "test"
+// @Param Authorization header string false "Bearer 用户令牌"
 // @Security ApiKeyAuth
 // @Success 200 {object} _ResponsePostDetail
 // @Router /community [get]
@@ -123,6 +123,17 @@ func GetPostListHandler(c *gin.Context) {
 }
 
 // GetPostOrderListHandler 根据指定的排序方式返回数据
+// GetPostListHandler 升级版帖子列表接口
+// @Summary 升级版帖子列表接口
+// @Description 可按社区按时间或分数排序查询帖子列表接口
+// @Tags 帖子相关接口
+// @Accept application/json
+// @Produce application/json
+// @Param Authorization header string false "Bearer 用户令牌"
+// @Param object query models.ParamOrderList false "查询参数"
+// @Security ApiKeyAuth
+// @Success 200 {object} _ResponsePostList
+// @Router /community/post/orderList [get]
 func GetPostOrderListHandler(c *gin.Context) {
 	// 初始化结构体并指定默认参数值
 	p := &models.ParamOrderList{

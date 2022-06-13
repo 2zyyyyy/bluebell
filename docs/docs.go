@@ -12,9 +12,8 @@ const docTemplate = `{
         "title": "{{.Title}}",
         "termsOfService": "http://swagger.io/terms/",
         "contact": {
-            "name": "万里",
-            "url": "https://github.com/2zyyyyy",
-            "email": "2zyyyyy4dev@gmail.com"
+            "url": "http://www.swagger.io/support",
+            "email": "support@swagger.io"
         },
         "license": {
             "name": "Apache 2.0",
@@ -66,6 +65,66 @@ const docTemplate = `{
                     }
                 }
             }
+        },
+        "/community/post/orderList": {
+            "get": {
+                "security": [
+                    {
+                        "ApiKeyAuth": []
+                    }
+                ],
+                "description": "可按社区按时间或分数排序查询帖子列表接口",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "帖子相关接口"
+                ],
+                "summary": "升级版帖子列表接口",
+                "parameters": [
+                    {
+                        "type": "string",
+                        "description": "Bearer 用户令牌",
+                        "name": "Authorization",
+                        "in": "header"
+                    },
+                    {
+                        "type": "integer",
+                        "description": "可以为空",
+                        "name": "community_id",
+                        "in": "query"
+                    },
+                    {
+                        "type": "string",
+                        "description": "排序依据",
+                        "name": "order",
+                        "in": "query"
+                    },
+                    {
+                        "type": "integer",
+                        "description": "页码",
+                        "name": "page",
+                        "in": "query"
+                    },
+                    {
+                        "type": "integer",
+                        "description": "每页数据量",
+                        "name": "size",
+                        "in": "query"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "$ref": "#/definitions/controllers._ResponsePostList"
+                        }
+                    }
+                }
+            }
         }
     },
     "definitions": {
@@ -79,6 +138,26 @@ const docTemplate = `{
                 "data": {
                     "description": "数据",
                     "$ref": "#/definitions/models.CommunityDetail"
+                },
+                "message": {
+                    "description": "提示信息",
+                    "type": "string"
+                }
+            }
+        },
+        "controllers._ResponsePostList": {
+            "type": "object",
+            "properties": {
+                "code": {
+                    "description": "状态码",
+                    "type": "integer"
+                },
+                "data": {
+                    "description": "数据",
+                    "type": "array",
+                    "items": {
+                        "$ref": "#/definitions/models.CommunityDetail"
+                    }
                 },
                 "message": {
                     "description": "提示信息",
@@ -109,11 +188,11 @@ const docTemplate = `{
 // SwaggerInfo holds exported Swagger Info so clients can modify it
 var SwaggerInfo = &swag.Spec{
 	Version:          "1.0",
-	Host:             "http://127.0.0.1:8080",
-	BasePath:         "",
+	Host:             "127.0.0.1:8080",
+	BasePath:         "/api/v1/",
 	Schemes:          []string{},
 	Title:            "bluebell项目接口文档",
-	Description:      "test information",
+	Description:      "Go Web 实战服务端接口文档",
 	InfoInstanceName: "swagger",
 	SwaggerTemplate:  docTemplate,
 }

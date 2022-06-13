@@ -8,3 +8,10 @@ type _ResponsePostDetail struct {
 	Message string                  `json:"message"` // 提示信息
 	Data    *models.CommunityDetail `json:"data"`    // 数据
 }
+
+// 帖子列表接口响应数据
+type _ResponsePostList struct {
+	Code    ResCode                   `json:"code"`    // 状态码
+	Message string                    `json:"message"` // 提示信息
+	Data    []*models.CommunityDetail `json:"data"`    // 数据
+}
