@@ -56,13 +56,9 @@ paths:
       - application/json
       description: 查询社区列表接口
       parameters:
-      - description: 社区id
-        in: query
-        name: id
-        type: integer
-      - description: 社区名称
-        in: query
-        name: name
+      - description: Bearer 用户令牌
+        in: header
+        name: Authorization
         type: string
       produces:
       - application/json

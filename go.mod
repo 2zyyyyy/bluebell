@@ -4,6 +4,7 @@ go 1.16
 
 require (
 	github.com/BurntSushi/toml v1.1.0 // indirect
+	github.com/cpuguy83/go-md2man/v2 v2.0.2 // indirect
 	github.com/dgrijalva/jwt-go v3.2.0+incompatible
 	github.com/fsnotify/fsnotify v1.5.1
 	github.com/gin-gonic/gin v1.8.1
@@ -22,10 +23,11 @@ require (
 	github.com/pelletier/go-toml/v2 v2.0.2 // indirect
 	github.com/sony/sonyflake v1.0.0
 	github.com/spf13/viper v1.11.0
-	github.com/stretchr/testify v1.7.2 // indirect
-	github.com/swaggo/files v0.0.0-20220610200504-28940afbdbfe // indirect
-	github.com/swaggo/gin-swagger v1.5.0 // indirect
+	github.com/stretchr/testify v1.7.2
+	github.com/swaggo/files v0.0.0-20220610200504-28940afbdbfe
+	github.com/swaggo/gin-swagger v1.5.0
 	github.com/swaggo/swag v1.8.2
+	github.com/urfave/cli/v2 v2.8.1 // indirect
 	go.uber.org/zap v1.17.0
 	golang.org/x/crypto v0.0.0-20220525230936-793ad666bf5e // indirect
 	golang.org/x/net v0.0.0-20220607020251-c690dde0001d // indirect

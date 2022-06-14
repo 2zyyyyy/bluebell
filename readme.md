@@ -19,12 +19,48 @@
   - jwt：使用`github.com/dgrijalva/jwt-go`来实现我们生成JWT和解析JWT的功能
     - jwt简介：JWT全称JSON Web Token是一种跨域认证解决方案，属于一个开放的标准，它规定了一种Token实现方式，目前多用于前后端分离项目和OAuth2.0业务场景下。
     - JWT全称JSON Web Token是一种跨域认证解决方案，属于一个开放的标准，它规定了一种Token实现方式，目前多用于前后端分离项目和OAuth2.0业务场景下。
+- docs：使用 swag init 生成的 swagger 页面渲染的静态文件，该目录包含以下文件
+  - docs.go
+  - swagger.json
+  - swagger.yaml
 - config.yaml：项目的配置信息
 - web_app.log：项目的日志文件
 - main.go：项目主入口
 - Makefile：借助Makefile我们在编译过程中不再需要每次手动输入编译的命令和编译的参数，可以极大简化项目编译过程。
   - Makefile简介：我们可以把Makefile简单理解为它定义了一个项目文件的编译规则。借助Makefile我们在编译过程中不再需要每次手动输入编译的命令和编译的参数，可以极大简化项目编译过程。同时使用Makefile也可以在项目中确定具体的编译规则和流程，很多开源项目中都会定义Makefile文件。
 
-*注意事项:*
-*1.如果生成了swagger，在swagger请求对应的接口的时候，要确保浏览器地址栏里面的地址和你的main函数中host是一致的，否则容易出现跨域问题。*
-*1的错误示例：我浏览器访问swagger的host是localhost，但是main中配置的地址却是127.0.0.1.在使用swagger调用接口的时候接口就会返回跨域的问题*
+
+
+### 功能演示
+
+#### swagger 接口文档
+
+![image-20220614104536488](https://tva1.sinaimg.cn/large/e6c9d24ely1h37kubtr7tj21el0u0juy.jpg)
+
+- swagger models(controllers.doc_models.go 中定义的返回数据结构体)
+  ![image-20220614104839621](https://tva1.sinaimg.cn/large/e6c9d24ely1h37kxgm763j21kw0noafc.jpg)
+
+  ![image-20220614104759247](https://tva1.sinaimg.cn/large/e6c9d24ely1h37kwrpenyj20u30u0q4d.jpg)
+
+- swagger 请求接口
+
+  - 先用 postman 调用接口查看返回数据，再用 swagger 请求查询两者返回的数据是否一致（图片中的 community_id 有区别，故响应数据有出入）
+
+  ![image-20220614102528000](https://tva1.sinaimg.cn/large/e6c9d24ely1h37k9bf6pbj214y0o8tbt.jpg)
+
+  ![image-20220614102642404](https://tva1.sinaimg.cn/large/e6c9d24ely1h37kaltxvpj213k0nnq50.jpg)
+
+  ![image-20220614102707590](https://tva1.sinaimg.cn/large/e6c9d24ely1h37kb1qhpzj213x0nrdjh.jpg)
+
+#### 单元测试
+
+- 针对创建帖子接口的单元测试演示（/api/v1/community/post）
+  - 正常用例
+    ![image-20220614103119869](https://tva1.sinaimg.cn/large/e6c9d24ely1h37kfem8zej213k0pn0vy.jpg)
+  - 异常用例
+    ![image-20220614103107049](https://tva1.sinaimg.cn/large/e6c9d24ely1h37kf7j36mj215h0qc0xf.jpg)
+
+*注意事项*
+1.如果生成了swagger，在swagger请求对应的接口的时候，要确保浏览器地址栏里面的地址和你的main函数中host是一致的，否则容易出现跨域问题。
+
+> 错误示例：我浏览器访问swagger的host是localhost，但是main中配置的地址却是127.0.0.1.在使用swagger调用接口的时候接口就会返回跨域的问题

@@ -24,13 +24,13 @@ import (
 // @Router /community [get]
 func CommunityHandler(c *gin.Context) {
 	// 1.查询到所有社区的信息(community_id, community_name)
-	list, err := service.GetCommunityList()
+	data, err := service.GetCommunityList()
 	if err != nil {
 		zap.L().Error("service.GetCommunityList failed.", zap.Error(err))
 		ResponseError(c, CodeServerBusy)
 		return
 	}
-	ResponseSuccess(c, list)
+	ResponseSuccess(c, data)
 }
 
 // CommunityDetailHandler 处理获取社区详情的函数

@@ -37,16 +37,10 @@
                 "summary": "社区列表接口",
                 "parameters": [
                     {
-                        "type": "integer",
-                        "description": "社区id",
-                        "name": "id",
-                        "in": "query"
-                    },
-                    {
                         "type": "string",
-                        "description": "社区名称",
-                        "name": "name",
-                        "in": "query"
+                        "description": "Bearer 用户令牌",
+                        "name": "Authorization",
+                        "in": "header"
                     }
                 ],
                 "responses": {
