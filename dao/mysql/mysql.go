@@ -12,20 +12,20 @@ import (
 
 var db *sqlx.DB
 
-func Init() (err error) {
+func Init(config *settings.MySQLConfig) (err error) {
 	dsn := fmt.Sprintf("%s:%s@tcp(%s:%d)/%s?charset=utf8mb4&parseTime=True",
-		settings.Config.MySQLConfig.User,
-		settings.Config.MySQLConfig.Password,
-		settings.Config.MySQLConfig.Host,
-		settings.Config.MySQLConfig.Port,
-		settings.Config.MySQLConfig.Dbname)
+		config.User,
+		config.Password,
+		config.Host,
+		config.Port,
+		config.Dbname)
 	db, err = sqlx.Connect("mysql", dsn)
 	if err != nil {
 		zap.L().Error("connect DB failed", zap.Error(err))
 		return
 	}
-	db.SetMaxOpenConns(settings.Config.MySQLConfig.MaxOpenCons)
-	db.SetMaxOpenConns(settings.Config.MySQLConfig.MaxIdleCons)
+	db.SetMaxOpenConns(config.MaxOpenCons)
+	db.SetMaxOpenConns(config.MaxIdleCons)
 	return
 }
 

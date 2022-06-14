@@ -1314,6 +1314,8 @@
 {"level":"DEBUG","time":"2022-06-13T21:27:46.632+0800","caller":"service/community.go:173","msg":"redis ids","ids":["23367333825216513"]}
 {"level":"INFO","time":"2022-06-13T21:27:46.633+0800","caller":"service/community.go:176","msg":"mysql posts","posts":[{"id":23367333825216513,"author_id":19953053381689345,"community_id":1,"status":0,"title":"根据社区id创建帖子","content":"社区壹号：创建帖子->redis写入帖子对应的社区、帖子的时间和帖子的分数","create_time":"2022-06-11T12:53:36Z"}]}
 {"level":"INFO","time":"2022-06-13T21:27:46.634+0800","caller":"logger/logger.go:83","msg":"/api/v1/community/post/orderList","status":200,"method":"GET","path":"/api/v1/community/post/orderList","query":"community_id=1&order=time&page=1&size=2","ip":"127.0.0.1","user-agent":"Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/102.0.0.0 Safari/537.36","error":"","cost":0.0037582}
+{"level":"INFO","time":"2022-06-13T22:20:26.337+0800","caller":"bluebell/main.go:91","msg":"shutdown server..."}
+{"level":"INFO","time":"2022-06-13T22:20:26.338+0800","caller":"bluebell/main.go:99","msg":"server exiting"}
 {"level":"DEBUG","time":"2022-06-14T10:44:20.928+0800","caller":"bluebell/main.go:49","msg":"logger init success!!!"}
 {"level":"ERROR","time":"2022-06-14T10:44:21.034+0800","caller":"mysql/mysql.go:24","msg":"connect DB failed","error":"Error 1045: Access denied for user 'root'@'localhost' (using password: YES)"}
 {"level":"INFO","time":"2022-06-14T10:44:21.059+0800","caller":"bluebell/main.go:73","msg":":8080"}
@@ -1332,3 +1334,12 @@
 {"level":"DEBUG","time":"2022-06-14T10:51:44.356+0800","caller":"bluebell/main.go:49","msg":"logger init success!!!"}
 {"level":"ERROR","time":"2022-06-14T10:51:44.373+0800","caller":"mysql/mysql.go:24","msg":"connect DB failed","error":"Error 1045: Access denied for user 'root'@'localhost' (using password: YES)"}
 {"level":"INFO","time":"2022-06-14T10:51:44.384+0800","caller":"bluebell/main.go:73","msg":":8080"}
+{"level":"DEBUG","time":"2022-06-14T22:48:52.623+0800","caller":"bluebell/main.go:49","msg":"logger init success!!!"}
+{"level":"INFO","time":"2022-06-14T22:48:52.628+0800","caller":"bluebell/main.go:73","msg":":8080"}
+{"level":"INFO","time":"2022-06-14T22:49:41.511+0800","caller":"logger/logger.go:83","msg":"/api/v1/community/post/orderList","status":200,"method":"GET","path":"/api/v1/community/post/orderList","query":"page=1&size=2&order=time&community_id=3","ip":"127.0.0.1","user-agent":"PostmanRuntime/7.29.0","error":"","cost":0.0008175}
+{"level":"INFO","time":"2022-06-14T22:49:45.485+0800","caller":"logger/logger.go:83","msg":"/api/v1/login","status":200,"method":"POST","path":"/api/v1/login","query":"","ip":"127.0.0.1","user-agent":"PostmanRuntime/7.29.0","error":"","cost":0.0025323}
+{"level":"DEBUG","time":"2022-06-14T22:49:55.890+0800","caller":"service/community.go:173","msg":"redis ids","ids":["23367364980506625"]}
+{"level":"INFO","time":"2022-06-14T22:49:55.891+0800","caller":"service/community.go:176","msg":"mysql posts","posts":[{"id":23367364980506625,"author_id":19953053381689345,"community_id":3,"status":0,"title":"根据社区id创建帖子","content":"社区三号：创建帖子->redis写入帖子对应的社区、帖子的时间和帖子的分数","create_time":"2022-06-11T12:53:54Z"}]}
+{"level":"INFO","time":"2022-06-14T22:49:55.892+0800","caller":"logger/logger.go:83","msg":"/api/v1/community/post/orderList","status":200,"method":"GET","path":"/api/v1/community/post/orderList","query":"page=1&size=2&order=time&community_id=3","ip":"127.0.0.1","user-agent":"PostmanRuntime/7.29.0","error":"","cost":0.0029495}
+{"level":"INFO","time":"2022-06-14T22:57:57.412+0800","caller":"bluebell/main.go:91","msg":"shutdown server..."}
+{"level":"INFO","time":"2022-06-14T22:57:57.413+0800","caller":"bluebell/main.go:99","msg":"server exiting"}

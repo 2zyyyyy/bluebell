@@ -2,6 +2,7 @@ package controllers
 
 import (
 	"bytes"
+	"encoding/json"
 	"net/http"
 	"net/http/httptest"
 	"testing"
@@ -30,6 +31,13 @@ func TestCreatePostHandler(t *testing.T) {
 
 	// 断言
 	assert.Equal(t, 200, w.Code)
-	// 判断相应是否返回需要登录
+	// 方法一：判断响应内容中是不是包含指定的字符串
 	assert.Contains(t, w.Body.String(), "请先登录")
+
+	// 方法二：将响应的数据反序列化至ResponseData 然后判断字段值是否符合预期结果
+	res := new(ResponseData)
+	if err := json.Unmarshal(w.Body.Bytes(), res); err != nil {
+		t.Fatalf("json unmarshal w.body failed. err%s", err)
+	}
+	assert.Equal(t, res.Code, CodeNeedLogin)
 }

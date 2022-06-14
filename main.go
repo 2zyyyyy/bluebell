@@ -48,7 +48,7 @@ func main() {
 	}(zap.L())
 	zap.L().Debug("logger init success!!!")
 	// 3.初始化mysql连接
-	if err := mysql.Init(); err != nil {
+	if err := mysql.Init(settings.Config.MySQLConfig); err != nil {
 		fmt.Println("init mysql failed, err:", err)
 	}
 	defer mysql.Close()
@@ -58,7 +58,7 @@ func main() {
 		return
 	}
 	// 4.初始化redis连接
-	if err := redis.Init(); err != nil {
+	if err := redis.Init(settings.Config.RedisConfig); err != nil {
 		fmt.Println("init redis failed, err:", err)
 	}
 	defer redis.Close()
