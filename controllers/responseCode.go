@@ -18,6 +18,7 @@ const (
 	CodePostInvalid
 
 	CodeDataIsNull
+	CodeRateLimit
 )
 
 var codeMsg = map[ResCode]string{
@@ -36,6 +37,7 @@ var codeMsg = map[ResCode]string{
 	CodePostInvalid: "当前PostID错误",
 
 	CodeDataIsNull: "查询结果为空",
+	CodeRateLimit:  "当前访问人数过多，请稍后再尝试噢...",
 }
 
 func (code ResCode) Msg() (msg string) {

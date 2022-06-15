@@ -5,6 +5,7 @@ import (
 	"bluebell/logger"
 	"bluebell/middlewares"
 	"net/http"
+	"time"
 
 	"go.uber.org/zap"
 
@@ -37,8 +38,8 @@ func SetUpRouter() *gin.Engine {
 	// 用户登录
 	v1.POST("/login", controllers.LoginHandler)
 
-	// JWT认证
-	v1.Use(middlewares.JWTAuthMiddleware())
+	// JWT认证 + 令牌桶限流
+	v1.Use(middlewares.JWTAuthMiddleware(), middlewares.RateLimitMiddleware(time.Second*2, 1))
 	{
 		v1.GET("/community", controllers.CommunityHandler)           // 社区列表
 		v1.GET("/community/:id", controllers.CommunityDetailHandler) // 社区详情
