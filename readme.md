@@ -52,6 +52,18 @@
 
   ![image-20220614102707590](https://tva1.sinaimg.cn/large/e6c9d24ely1h37kb1qhpzj213x0nrdjh.jpg)
 
+- 令牌桶限流
+  
+  添加令牌桶限流中间件对部分接口限流。
+  
+  频繁请求：
+  
+  ![image-20220628150619122](https://tva1.sinaimg.cn/large/e6c9d24ely1h3nz1um6roj215l0dm3zn.jpg)
+  
+  正常请求：
+  
+  ![image-20220628150653670](https://tva1.sinaimg.cn/large/e6c9d24ely1h3nz2gj1e7j21570nimze.jpg)
+
 #### 单元测试
 
 - 针对创建帖子接口的单元测试演示（/api/v1/community/post）
